@@ -26,11 +26,11 @@ public class Server {
 		try {
 			Server server = new Server();
 			Socket currentSocket;
-			FtpRequest request;
+			FtpRequestChannel request;
 			// Listening on the port 9009 => Waiting some clients...
 			while(true) {
 				currentSocket = server.waitConnection();
-				request = new FtpRequest(currentSocket);
+				request = new FtpRequestChannel(currentSocket);
 				request.start();
 			}
 		} catch(Exception e) {
