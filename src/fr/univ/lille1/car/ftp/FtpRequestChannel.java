@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class FtpRequestChannel extends AbstractChannel {
 	public void processRequest() throws IOException {
 		reply(220, "connected to ftp homemade");
 		//reply(530, "Need user");
+		reply(220, "Launching port command");
 		// We listen on the socket ftp for a while...
 		System.out.println("PWD ??"+pwd);
 		while(true) {
@@ -40,7 +43,7 @@ public class FtpRequestChannel extends AbstractChannel {
 					processPass(commandProcess.split(" ")[1]);
 					break;
 				case "RETR" :
-					processRetr();
+					processRetr(commandProcess.split(" ")[1]);
 					break;
 				case "STOR" :
 					processStor();
@@ -96,9 +99,11 @@ public class FtpRequestChannel extends AbstractChannel {
 	}
 	public void processStor() {
 		
-	}
-	public void processRetr() {
 		
+	}
+	public void processRetr(String filepath) {
+		new FTPDataChannelRetr(adresseDataChannel, portDataChannel,pwd + "/" + filepath).start();
+		reply(226,"Transfert OK.");
 	}
 	public void processList() {
 		new FTPDataChannelList(adresseDataChannel, portDataChannel,pwd).start();

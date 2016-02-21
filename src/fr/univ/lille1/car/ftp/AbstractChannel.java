@@ -28,6 +28,7 @@ public abstract class AbstractChannel extends Thread {
 		}
 	}
 	protected void reply(int code, String text){
+		System.out.println("REPLY // " + code + " " + text);
 		writeToSocket(code + " " + text + " \r\n");
 	}
 }
