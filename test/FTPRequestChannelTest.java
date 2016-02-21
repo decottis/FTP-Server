@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -29,9 +28,10 @@ public class FTPRequestChannelTest {
 	@BeforeClass
 	public static void setUp() throws UnknownHostException, IOException, InterruptedException {
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				try {
-					server = new Server();
+					server = Server.getInstance();
 					while(true){
 						socketFromServer = server.waitConnection();
 					}
@@ -78,6 +78,7 @@ public class FTPRequestChannelTest {
 		System.out.println("DATAPORT " + channel.getPortDataChannel());
 		final ServerSocket listenerClient = new ServerSocket(channel.getPortDataChannel());
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					dataClientSocket = listenerClient.accept();
