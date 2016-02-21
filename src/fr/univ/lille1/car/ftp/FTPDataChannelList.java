@@ -22,6 +22,7 @@ public class FTPDataChannelList extends FTPDataChannel {
 		System.out.println("FIN DU RUN LIST");
 		try {
 			writer.close();
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

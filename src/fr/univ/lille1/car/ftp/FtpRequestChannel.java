@@ -101,6 +101,9 @@ public class FtpRequestChannel extends AbstractChannel {
 		
 		
 	}
+	public String getPwd() {
+		return pwd;
+	}
 	public void processRetr(String filepath) {
 		new FTPDataChannelRetr(adresseDataChannel, portDataChannel,pwd + "/" + filepath).start();
 		reply(226,"Transfert OK.");
