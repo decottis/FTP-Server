@@ -22,7 +22,7 @@ public class FtpRequestChannel extends AbstractChannel {
 	public FtpRequestChannel(Socket socketRequest) throws IOException {
 		this.socketChannel = socketRequest;
 		reader =  new BufferedReader(new InputStreamReader(this.socketChannel.getInputStream()));
-		writer = new DataOutputStream(socketRequest.getOutputStream());
+		writer = new DataOutputStream(socketChannel.getOutputStream());
 		pwd = System.getProperty("user.home");
 	}
 	public void processRequest() throws IOException {
@@ -86,9 +86,9 @@ public class FtpRequestChannel extends AbstractChannel {
 	}
 	public void processUser(String user) throws IOException {
 		if(user.equals("THOREZ")) {
-			reply(331,"L'utilisateur selectionné est existant !");
+			reply(331,"L'utilisateur est existant !");
 		} else {
-			reply(230,"L'utilisateur selectionné est anonymous!");
+			reply(230,"L'utilisateur est anonymous !");
 		}
 	}
 	public void processPass(String pass) {
@@ -113,6 +113,7 @@ public class FtpRequestChannel extends AbstractChannel {
 	public void processQuit() {
 		
 	}
+	@Override
 	public void run() {
 		try {
 			processRequest();
@@ -131,4 +132,11 @@ public class FtpRequestChannel extends AbstractChannel {
 		//writeToSocket("200 " + pwd);
 		reply(200,"unix");
 	}
+	public String getAdresseDataChannel() {
+		return adresseDataChannel;
+	}
+	public int getPortDataChannel() {
+		return portDataChannel;
+	}
 }
+

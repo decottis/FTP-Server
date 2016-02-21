@@ -11,7 +11,7 @@ public abstract class AbstractChannel extends Thread {
 	protected DataOutputStream writer;
 	protected Socket socketChannel;
 	
-	protected String readLineFromSocket() {
+	public String readLineFromSocket() {
 		try {
 		return reader.readLine();
 		} catch(IOException e) {
@@ -19,16 +19,15 @@ public abstract class AbstractChannel extends Thread {
 		}
 		return null;
 	}
-	protected void writeToSocket(String buffer){
+	public void writeToSocket(String buffer){
 		try {
 			writer.writeBytes(buffer);
-			writer.flush();
 		} catch(Exception e) {
 			System.err.println("Problem for write to ftp socket...");
 		}
 	}
 	protected void reply(int code, String text){
 		System.out.println("REPLY // " + code + " " + text);
-		writeToSocket(code + " " + text + " \r\n");
+		writeToSocket(code + " " + text + "\n");
 	}
 }

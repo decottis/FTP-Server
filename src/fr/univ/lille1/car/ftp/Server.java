@@ -9,13 +9,16 @@ import java.net.UnknownHostException;
 public class Server {
 
 	protected final int PORT = 9009;
-	protected ServerSocket commandSocket;
+	public ServerSocket commandSocket;
 	public Server() throws UnknownHostException, IOException {
 		//commandeSocket = new MySocket(InetAddress.getLocalHost(), PORT);
 		commandSocket = new ServerSocket(PORT);
 	}
 	public Socket waitConnection() throws IOException {
 		return commandSocket.accept();
+	}
+	public void stopListening() throws IOException {
+		commandSocket.close();
 	}
 		/**
 	 * @param args
